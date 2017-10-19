@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ShadowMouse</title>
+</head>
+<body>
+
+  <div class="hero">
+    <h1 contenteditable>WOAH!</h1>
+  </div>
+
+  <style>
+  html {
+    color:black;
+    font-family: sans-serif;
+  }
+
+  body {
+    margin: 0;
+  }
+
+  .hero {
+    min-height: 100vh;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    color:black;
+  }
+
+  h1 {
+    /*text-shadow: 10px 10px 0 rgba(0,0,0,1);*/
+    font-size: 100px;
+  }
+  </style>
+
+<script>
+  // grap target
+  let hero = document.querySelector('.hero');
+  let text = hero.querySelector('h1');
+  // attach listener and cb with EVENT
+  hero.addEventListener('mousemove', shadow);
+
+  function shadow(e){
+    // OFFSETWIDTH and OFFSET HEIGHT get the height and width
+     // of the element this will be added to the parent element -- the window --
+    let width = hero.offsetWidth;
+    let height = hero.offsetHeight;
+    // e.offsetx e.offsety are the pointer positions relative to the target padding
+    let offX =  e.offsetX;
+    let offY =  e.offsetY;
+    let shadow_distance = 100;
+   
+    // the target may be the hero or the h1 so we need to correct for this
+    // so we add the coordinates of the child element to the parent element
+  
+    if(this !== e.target){
+      // add the left and top poistion to X & Y
+      offX = offX + e.target.offsetLeft;
+      offY = offY + e.target.offsetTop;
+    }
+    let shadow_distance_x = Math.round((offX/width * shadow_distance) - (shadow_distance/2));
+    let shadow_distance_y = Math.round((offY/height * shadow_distance) - (shadow_distance/2));
+    text.style.textShadow = `${shadow_distance_x}px ${shadow_distance_y}px 0px rgba(211,211,211, 0.8)`
+  }
+
+</script>
+</body>
+</html>
